@@ -2,6 +2,8 @@ github.com/applicaset/sms-svc v0.0.0-20201215105836-b42caf8c15b3 h1:Fth5TPjfYIgC
 github.com/applicaset/sms-svc v0.0.0-20201215105836-b42caf8c15b3/go.mod h1:wAvAa7gSPWKIcVQnXTkrZGwiji8Tspp+Rj4E0k7LK3Q=
 github.com/applicaset/sms-svc v0.0.0-20201215110019-c99edc580ae3 h1:eEjp41bPvrDpw4n71/Tnvm+3BuVR/DZ2HXMLB+6JgwY=
 github.com/applicaset/sms-svc v0.0.0-20201215110019-c99edc580ae3/go.mod h1:wAvAa7gSPWKIcVQnXTkrZGwiji8Tspp+Rj4E0k7LK3Q=
+github.com/applicaset/sms-svc v0.0.0-20201219100929-3d3b04b364e3 h1:QZL9mO1nWZIhC7ibIpWUT42PuAJa0TQXdCoJMvp0JxM=
+github.com/applicaset/sms-svc v0.0.0-20201219100929-3d3b04b364e3/go.mod h1:wAvAa7gSPWKIcVQnXTkrZGwiji8Tspp+Rj4E0k7LK3Q=
 github.com/google/uuid v1.1.2 h1:EVhdT+1Kseyi1/pUmXKaFxYsDNy9RQYkMWRH68J/W7Y=
 github.com/google/uuid v1.1.2/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=

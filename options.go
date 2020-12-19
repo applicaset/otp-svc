@@ -1,3 +1,3 @@
-package otp_svc
+package otpsvc
 
 type Option func(*service)

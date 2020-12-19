@@ -1,4 +1,4 @@
-package otp_svc
+package otpsvc
 
 import "time"
 

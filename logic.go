@@ -1,4 +1,4 @@
-package otp_svc
+package otpsvc
 
 import (
 	"bytes"
@@ -19,7 +19,7 @@ type service struct {
 	expiresInSec int64
 	rnd          *rand.Rand
 	pinLen       int
-	smsSvc       sms_svc.Service
+	smsSvc       smssvc.Service
 	msgTpl       *template.Template
 }
 
@@ -91,12 +91,14 @@ func (svc *service) VerifyOTP(ctx context.Context, req VerifyOTPRequest) (*Verif
 
 const defaultMessageTemplate = "{{ .PinCode }}"
 
-func New(repo Repository, smsSvc sms_svc.Service, options ...Option) Service {
+const defaultPinLen = 4
+
+func New(repo Repository, smsSvc smssvc.Service, options ...Option) Service {
 	svc := service{
 		repo:   repo,
 		smsSvc: smsSvc,
-		rnd:    rand.New(rand.NewSource(time.Now().UnixNano())),
-		pinLen: 4,
+		rnd:    rand.New(rand.NewSource(time.Now().UnixNano())), //nolint:gosec
+		pinLen: defaultPinLen,
 		msgTpl: template.Must(template.New("message").Parse(defaultMessageTemplate)),
 	}
 
