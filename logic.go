@@ -16,14 +16,20 @@ import (
 
 type service struct {
 	repo         Repository
-	expiresInSec int64
+	expiresInSec int
 	rnd          *rand.Rand
 	pinLen       int
 	smsSvc       smssvc.Service
 	msgTpl       *template.Template
 }
 
-func (svc *service) SendOTP(ctx context.Context, req SendOTPRequest) (*SendOTPResponse, error) {
+func WithGoogleAutomaticSMSVerification(hash string) SendOTPOption {
+	return func(data map[string]interface{}) {
+		data["Hash"] = hash
+	}
+}
+
+func (svc *service) SendOTP(ctx context.Context, req SendOTPRequest, options ...SendOTPOption) (*SendOTPResponse, error) {
 	phoneNumber := req.PhoneNumber
 	// TODO: validate phone number
 
@@ -41,9 +47,11 @@ func (svc *service) SendOTP(ctx context.Context, req SendOTPRequest) (*SendOTPRe
 		return nil, errors.Wrap(err, "error on create entity")
 	}
 
-	data := struct {
-		PinCode string
-	}{PinCode: pinCode}
+	data := map[string]interface{}{"PinCode": pinCode}
+
+	for i := range options {
+		options[i](data)
+	}
 
 	var buf bytes.Buffer
 
@@ -93,13 +101,16 @@ const defaultMessageTemplate = "{{ .PinCode }}"
 
 const defaultPinLen = 4
 
+const defaultExpiresInSec = 300
+
 func New(repo Repository, smsSvc smssvc.Service, options ...Option) Service {
 	svc := service{
-		repo:   repo,
-		smsSvc: smsSvc,
-		rnd:    rand.New(rand.NewSource(time.Now().UnixNano())), //nolint:gosec
-		pinLen: defaultPinLen,
-		msgTpl: template.Must(template.New("message").Parse(defaultMessageTemplate)),
+		repo:         repo,
+		expiresInSec: defaultExpiresInSec,
+		rnd:          rand.New(rand.NewSource(time.Now().UnixNano())), //nolint:gosec
+		pinLen:       defaultPinLen,
+		smsSvc:       smsSvc,
+		msgTpl:       template.Must(template.New("message").Parse(defaultMessageTemplate)),
 	}
 
 	for i := range options {
